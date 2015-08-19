@@ -10,6 +10,8 @@
 #include "settings.h"
 #include "configvalues.h"
 
+#include <QStringList>
+
 ImportConfig::ImportConfig(QWidget *parent) :
     QDialog(parent),
     m_ui(new Ui::ImportConfig)
@@ -99,6 +101,7 @@ void ImportConfig::on_rbSaveAsName_toggled(bool checked)
     }
 }
 
+/*
 QString keys[] = {
 	"ca",
 	"cert",
@@ -117,6 +120,9 @@ QString keys[] = {
 	"askpass",
 	"crl-verify"
 };
+*/
+
+static QStringList keys;
 
 void ImportConfig::on_cmdImport_clicked()
 {
@@ -193,11 +199,32 @@ void ImportConfig::on_cmdImport_clicked()
 						.arg(destName));
 				}
 			};
-
-			for(const auto &key : keys)
-			{
-				copyConfigFile(key);
+			
+			keys <<	"ca" 
+			<< "cert" 
+			<< "key" 
+			<< "pkcs12" 
+			<< "auth-user-pass" 
+			<< "secret"
+			<< "replay-persist"
+			<< "dh"
+			<< "cert"
+			<< "extra-certs"
+			<< "key"
+			<< "pkcs12"
+			<< "tls-auth"
+			<< "tls-auth"
+			<< "askpass"
+			<< "crl-verify";
+			
+			for (int i = 0; i < keys.length(); i++) {
+				copyConfigFile(keys.at(i));
 			}
+
+			//for(const auto &key : keys)
+			//{
+			//	copyConfigFile(key);
+			//}
         }
 
         Preferences::instance()->addNewConfigToDatabase(configName, pathToConfig);

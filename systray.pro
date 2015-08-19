@@ -103,11 +103,14 @@ SOURCES = main.cpp \
     netmanager.cpp \
     configvalues.cpp
 
-win32::INCLUDEPATH += "quazip/zlib-1.2.5" \
+win32::INCLUDEPATH += "quazip/zlib" \
                       "qca/include/QtCrypto"
 
-win32::LIBS += "quazip/libquazip.a" \
-               "qca/lib/libqca2.a" \
+#win32::LIBS += -L"$PWD/quazip" \
+#               -lquazip \
+#               -lzlib \
+#               -L"$PWD/qca/lib" \
+#              -lqca
 
 include("qca/crypto.prf")
 
